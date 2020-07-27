@@ -1,0 +1,1 @@
+export const USER_SERVER = 'http://localhost:9000/api';
