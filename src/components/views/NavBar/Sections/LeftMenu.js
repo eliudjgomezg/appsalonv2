@@ -1,18 +1,19 @@
 import React from 'react';
 import { Menu } from 'antd';
+import { Link } from "react-router-dom";
 
 
 function LeftMenu(props) {
   return (
     <Menu mode={props.mode}>
       <Menu.Item key="Home">
-        <a href="/home">Home</a>
+        <Link to="/home">Home</Link>
       </Menu.Item>
       <Menu.Item key="AddClient">
-        <a href="/client">Add Client</a>
+        <Link to="/client">Add Client</Link>
       </Menu.Item>
       <Menu.Item key="AddHairCut">
-        <a href="/haircut">Add HairCut</a>
+        <Link to="/haircut">Add HairCut</Link>
       </Menu.Item>
     </Menu>
   )

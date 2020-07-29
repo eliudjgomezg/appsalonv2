@@ -10,29 +10,30 @@ export default function (ComposedClass, reload, adminRoute = null) {
       
         const dispatch = useDispatch();
 
-        useEffect(() => {
+        // useEffect(() => {
 
-            dispatch(auth()).then(async response => {
-                if (await !response.payload.isAuth) {
-                    if (reload) {
-                        alert("AQUI")
-                      //  props.history.push('/register_login')
-                    }
-                } else {
-                    if (adminRoute && !response.payload.isAdmin) {
-                        alert("AQUI 1 ")
-                        //props.history.push('/')
-                    }
-                    else {
-                        if (reload === false) {
-                            alert("AQUI 2")
-                          //  props.history.push('/')
-                        }
-                    }
-                }
-            })
+        //     dispatch(auth()).then(async response => {
+        //         console.log("response", response)
+        //         if (await !response.payload.isAuth) {
+        //             if (reload) {
+        //                 alert("AQUI")
+        //               //  props.history.push('/register_login')
+        //             }
+        //         } else {
+        //             if (adminRoute && !response.payload.isAdmin) {
+        //                 alert("AQUI 1 ")
+        //                 //props.history.push('/')
+        //             }
+        //             else {
+        //                 if (reload === false) {
+        //                     alert("AQUI 2")
+        //                   //  props.history.push('/')
+        //                 }
+        //             }
+        //         }
+        //     })
             
-        }, [dispatch, props.history, user.payload])
+        // }, [dispatch, props.history, user.payload])
 
         return (
             <ComposedClass {...props} user={user} />
