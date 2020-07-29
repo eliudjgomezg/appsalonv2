@@ -4,7 +4,9 @@ import * as Yup from "yup";
 import { addHairCut } from "../../../_actions/client/client_actions";
 import { useDispatch } from "react-redux";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Icon, Typography } from "antd";
+
+const { Title } = Typography;
 
 const formItemLayout = {
   labelCol: {
@@ -37,12 +39,12 @@ function AddHairCut(props) {
     <Formik
       initialValues={{
         typeCut: "",
-        amountClient: 0,
-        increase: 0,
+        amountClient: "",
+        increase: "",
         id:""
       }}
       validationSchema={Yup.object().shape({
-        typeCut: Yup.string().required("Type is required"),
+        typeCut: Yup.string().required("Type Cut is required"),
         amountClient: Yup.number().required("Amount is required"),
         increase: Yup.number().required("Increse is required")
       })}
@@ -82,39 +84,50 @@ function AddHairCut(props) {
 
         return (
           <div className="app">
-            <Form>
+            <Title level={2}>Add HairCut Client</Title>
+            <Form style={{width:'350px'}}  onSubmit={handleSubmit}>
+
               <Form.Item required label="Type Cut">
                 <Input
-                  id="typeCut"
+                  id="typeCut"       
+                  prefix={<Icon type="scissor"/>}       
                   type="text"
                   value={values.typeCut}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.typeCut && touched.typeCut
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                  {errors.typeCut && touched.typeCut && (
+                  <div className="input-feedback">{errors.typeCut}</div>
+                )}
               </Form.Item>
               <Form.Item required label="Amount Client">
                 <Input
                   id="amountClient"
+                  prefix={<Icon type="dollar"/>}
                   type="text"
                   value={values.amountClient}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.amountClient && touched.amountClient
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                  {errors.amountClient && touched.amountClient && (
+                  <div className="input-feedback">{errors.amountClient}</div>
+                )}
               </Form.Item>
 
               <Form.Item required label="Increase">
                 <Input
                   id="increase"
+                  prefix={<Icon type="dollar"/>}
                   type="text"
                   value={values.increase}
                   onChange={handleChange}
@@ -125,6 +138,9 @@ function AddHairCut(props) {
                       : "text-input"
                   }
                 />
+                   {errors.increase && touched.increase && (
+                  <div className="input-feedback">{errors.increase}</div>
+                )}
               </Form.Item>
 
               <Form.Item {...tailFormItemLayout}>
@@ -133,7 +149,7 @@ function AddHairCut(props) {
                   type="primary"
                   disabled={isSubmitting}
                 >
-                  Submit
+                  Add HairCut
                 </Button>
               </Form.Item>
             </Form>

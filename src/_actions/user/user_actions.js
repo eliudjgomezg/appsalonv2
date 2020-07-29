@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_USER , REGISTER_USER, AUTH_USER, LOGOUT_USER, UseActionTypes} from './types';
+import { LOGIN_USER , REGISTER_USER, AUTH_USER, LOGOUT_USER} from './types';
 
 import { USER_SERVER } from './../../components/Config';
 

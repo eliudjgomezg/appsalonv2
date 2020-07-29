@@ -17,8 +17,8 @@ function App() {
       <NavBar />
       <div  style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
       <Switch>
-        <Route exact path="/" component={Auth(LoginPage, false)} />
-        <Route exact path="/register" component={Auth(RegisterPage, false)} />
+        <Route exact path="/" component={Auth(LoginPage, null)} />
+        <Route exact path="/register" component={Auth(RegisterPage, null)} />
         <Route exact path="/home" component={Auth(HomePage, null)} />
         <Route exact path="/client" component={Auth(AddClients, null)} />
         <Route exact path="/haircut" component={Auth(AddHairCut, null)} />

@@ -1,26 +1,15 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {
-  registerCorteClient,
-  registerClient,
-} from "../../../_actions/client/client_actions";
+import {  registerClient } from "../../../_actions/client/client_actions";
 import { useDispatch } from "react-redux";
 
-import { Form, Input, Icon, Button, Typography } from "antd";
+import { Form, Input, Icon, Button, Typography, Modal } from "antd";
 
 const { Title } = Typography;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
+
+
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -34,22 +23,40 @@ const tailFormItemLayout = {
   },
 };
 
+function succes(){
+  Modal.success(
+    {
+      content:"Client Saved"
+    }
+  )
+}
+
+function error(){
+  Modal.error(
+    {
+      content:"Client not Saved"
+    }
+  )
+}
+
 function AddClients (props) {
   const dispatch = useDispatch();
+  let variable = { clientfrom: localStorage.getItem("clienid") };
+  console.log("variable client", variable)
 
   return (
     <Formik
       initialValues={{
         nameClient: "",
         nameCoiffeur:"",
-        numberTicket: 0,
-        numberVoucher: 0,
+        numberTicket: "",
+        numberVoucher: "",
       }}
       validationSchema={Yup.object().shape({
-        nameClient: Yup.string().required("Name is required"),
-        nameCoiffeur: Yup.string().required("Name Peluquero is required"),
-        numberTicket: Yup.number().required("Number Boleta is required"),
-        numberVoucher: Yup.number().required("Number Vale is required"),
+        nameClient: Yup.string().required("Name Client is required"),
+        nameCoiffeur: Yup.string().required("Name Coiffeur is required"),
+        numberTicket: Yup.number().required("Number Ticket is required"),
+        numberVoucher: Yup.number().required("Number Voucher is required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -62,9 +69,9 @@ function AddClients (props) {
 
           dispatch(registerClient(datatoSubmit)).then((response) => {
             if (response.payload.success) {
-              alert("Cliente Guardado");
+              succes();
             } else {
-              alert("No se pudo almacenar Cliente");
+             error();
             }
           });
           setSubmitting(false);
@@ -85,7 +92,7 @@ function AddClients (props) {
         return (
           <div className="app">
             <Title level={2}>Add Client</Title>
-            <form style={{width:'350px'}}>
+            <Form style={{width:'350px'}}  onSubmit={handleSubmit}>
 
               <Form.Item required label="Name Client">
                 <Input
@@ -96,25 +103,32 @@ function AddClients (props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.nameClient && touched.nameClient
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                    {errors.nameClient && touched.nameClient && (
+                  <div className="input-feedback">{errors.nameClient}</div>
+                )}
               </Form.Item>
               <Form.Item required label="Name Coiffeur">
                 <Input
                   id="nameCoiffeur"
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   type="text"
                   value={values.nameCoiffeur}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.nameCoiffeur && touched.nameCoiffeur
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                    {errors.nameCoiffeur && touched.nameCoiffeur && (
+                  <div className="input-feedback">{errors.nameCoiffeur}</div>
+                )}
               </Form.Item>
               <Form.Item required label="Number Ticket">
                 <Input
@@ -124,11 +138,14 @@ function AddClients (props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.numberTicket && touched.numberTicket
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                 {errors.numberTicket && touched.numberTicket && (
+                  <div className="input-feedback">{errors.numberTicket}</div>
+                )}
               </Form.Item>
               <Form.Item required label="Number Voucher">
                 <Input
@@ -138,11 +155,14 @@ function AddClients (props) {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.name && touched.name
+                    errors.numberVoucher && touched.numberVoucher
                       ? "text-input error"
                       : "text-input"
                   }
                 />
+                    {errors.numberVoucher && touched.numberVoucher && (
+                  <div className="input-feedback">{errors.numberVoucher}</div>
+                )}
               </Form.Item>
 
 
@@ -150,13 +170,12 @@ function AddClients (props) {
                 <Button
                   onClick={handleSubmit}
                   type="primary"
-                  disabled={isSubmitting}
-                >
-                  Submit
+                  disabled={isSubmitting}>
+                  Add Client
                 </Button>
               </Form.Item>
               
-            </form>
+            </Form>
           </div>
         );
       }}
